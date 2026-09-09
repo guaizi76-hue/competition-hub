@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>新学期语数英赛事一站通 · 招生精选</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#F3F4F6;color:#111827;line-height:1.6;-webkit-font-smoothing:antialiased}
+  body{padding-bottom:96px;max-width:680px;margin:0 auto;background:#F3F4F6}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+
+  /* ===== 封面 Hero（海报） ===== */
+  .cover{position:relative;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+  .cover-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;z-index:0}
+  .cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.15) 0%,rgba(255,255,255,.55) 42%,rgba(30,58,138,.75) 100%);z-index:1}
+  .cover-inner{position:relative;z-index:2;padding:24px 20px 22px;color:#fff}
+  .cover-eyebrow{font-size:11px;letter-spacing:.22em;font-weight:700;color:#FDE68A;margin-bottom:10px;text-transform:uppercase}
+  .cover-title{font-size:28px;line-height:1.18;font-weight:800;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.18),0 6px 18px rgba(0,0,0,.35);margin:0 0 8px}
+  .cover-title b{color:#FDE68A}
+  .cover-sub{font-size:13px;color:rgba(255,255,255,.95);margin:0 0 16px;line-height:1.55;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+  .cover-cta{display:inline-block;background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;padding:12px 24px;border-radius:26px;font-weight:700;font-size:14px;box-shadow:0 6px 18px rgba(239,68,68,.45);border:none;cursor:pointer}
+
+  /* ===== Stats ===== */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 16px;background:#fff;margin:-1px 16px 0;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.06);position:relative;z-index:3}
+  .stat{text-align:center}
+  .stat-n{font-size:22px;font-weight:800;color:#1E3A8A;line-height:1.2}
+  .stat-l{font-size:11px;color:#6B7280;margin-top:2px}
+
+  /* ===== Section Title ===== */
+  .sec{padding:24px 16px 8px}
+  .sec-title{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .sec-title::before{content:"";display:inline-block;width:4px;height:18px;background:linear-gradient(180deg,#3B82F6,#06B6D4);border-radius:2px}
+  .sec-sub{font-size:12px;color:#6B7280;margin-top:4px}
+
+  /* ===== Filter ===== */
+  .filters{padding:8px 16px 4px;display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{padding:7px 14px;border-radius:18px;background:#fff;border:1px solid #E5E7EB;font-size:13px;color:#374151;white-space:nowrap;cursor:pointer;transition:all .15s ease;flex-shrink:0}
+  .chip.active{background:#1E3A8A;color:#fff;border-color:#1E3A8A}
+
+  /* ===== 封面卡片样式 ===== */
+  .grid{padding:12px 16px 24px;display:grid;grid-template-columns:1fr;gap:16px}
+  .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.07);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;border:none}
+  .card:active{transform:scale(.98);box-shadow:0 1px 4px rgba(0,0,0,.09)}
+  .card-cover{position:relative;height:132px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .card-cover::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,var(--c1),var(--c2) 55%,var(--c3))}
+  .card-cover::after{content:"";position:absolute;width:160px;height:160px;border:1px solid rgba(255,255,255,.28);border-radius:50%;top:-60px;right:-40px}
+  .card-cover-name{position:relative;z-index:2;color:#fff;font-size:20px;font-weight:800;line-height:1.3;padding:0 16px;text-align:center;text-shadow:0 2px 0 rgba(0,0,0,.16),0 6px 16px rgba(0,0,0,.28)}
+  .card-cover-emoji{position:absolute;right:12px;bottom:10px;font-size:30px;z-index:2;opacity:.92;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
+  .card-cover-status{position:absolute;left:12px;top:12px;z-index:2;font-size:10px;padding:3px 10px;border-radius:12px;background:rgba(255,255,255,.92);color:#111827;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+  .card-cover-status.on{background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff}
+  .card-body{padding:14px 14px 16px}
+  .card-name{font-size:16px;font-weight:700;color:#111827;line-height:1.35;margin-bottom:6px}
+  .card-sell{font-size:13px;color:#4B5563;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px}
+  .card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .card-tag{font-size:11px;padding:3px 9px;border-radius:10px;background:#F3F4F6;color:#4B5563;font-weight:600}
+  .card-deadline{font-size:12px;color:#9CA3AF;margin-bottom:12px}
+  .card-deadline b{color:#EF4444;font-weight:700}
+  .card-btn{display:block;width:100%;padding:11px;background:linear-gradient(135deg,#EF4444,#F59E0B);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer}
+
+  /* ===== Modal ===== */
+  .modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:flex-end;justify-content:center;animation:fadeIn .2s ease}
+  .modal-mask.open{display:flex}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{background:#fff;width:100%;max-width:680px;max-height:88vh;border-radius:18px 18px 0 0;overflow-y:auto;animation:slideUp .25s ease;padding:20px 20px 28px}
+  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .modal-close{position:sticky;top:0;display:flex;justify-content:flex-end;margin-bottom:-12px;z-index:2}
+  .modal-close button{width:32px;height:32px;border:none;background:#F3F4F6;border-radius:50%;font-size:18px;cursor:pointer;color:#6B7280}
+  .modal h2{font-size:20px;font-weight:700;margin:6px 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .modal-cat{display:inline-block;font-size:11px;padding:3px 8px;border-radius:10px;color:#fff;font-weight:600}
+  .modal-section{margin-top:16px;padding-top:14px;border-top:1px solid #F3F4F6}
+  .modal-section-title{font-size:12px;color:#9CA3AF;text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:8px}
+  .modal-row{font-size:14px;color:#374151;margin:6px 0}
+  .modal-row .lbl{display:inline-block;color:#9CA3AF;min-width:74px;font-size:13px}
+  .modal-sell{background:linear-gradient(135deg,#FEF3C7,#FDE68A);border-radius:10px;padding:14px;font-size:14px;color:#78350F;line-height:1.6}
+  .modal-link{display:block;margin-top:8px;padding:12px;background:#EFF6FF;color:#1E3A8A;border-radius:10px;font-size:13px;word-break:break-all;font-weight:600}
+  .modal-btn{display:block;width:100%;margin-top:14px;padding:14px;background:linear-gradient(135deg,#EF4444,#F59E0B);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer}
+
+  /* ===== Empty / Footer ===== */
+  .empty{padding:40px 16px;text-align:center;color:#9CA3AF;font-size:14px}
+  .foot{padding:24px 16px;text-align:center;color:#9CA3AF;font-size:11px}
+
+  /* ===== Floating CTA ===== */
+  .float-cta{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);max-width:680px;width:calc(100% - 32px);background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;padding:14px;border-radius:30px;text-align:center;font-weight:700;font-size:15px;box-shadow:0 8px 22px rgba(239,68,68,.5);z-index:900;cursor:pointer;border:none}
+
+  /* ===== 加微信弹层 ===== */
+  .wechat-mask{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:1200;display:none;align-items:center;justify-content:center;animation:fadeIn .2s ease;padding:20px}
+  .wechat-mask.open{display:flex}
+  .wechat-box{background:#fff;width:100%;max-width:360px;border-radius:20px;overflow:hidden;animation:popIn .25s ease}
+  @keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+  .wechat-head{background:linear-gradient(135deg,#198754,#20C997);color:#fff;padding:18px 20px;text-align:center}
+  .wechat-head h3{margin:0;font-size:17px;font-weight:800}
+  .wechat-head p{margin:6px 0 0;font-size:12px;opacity:.92}
+  .wechat-body{padding:18px 20px 20px}
+  .wechat-qr-wrap{display:flex;justify-content:center;margin-bottom:14px}
+  .wechat-qr{width:180px;height:180px;border:1px solid #F3F4F6;border-radius:12px;object-fit:contain}
+  .wechat-hint{font-size:12px;color:#6B7280;text-align:center;margin:0 0 14px;line-height:1.6}
+  .wechat-id-row{display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:10px 12px;margin-bottom:14px}
+  .wechat-id-label{font-size:12px;color:#94A3B8;flex-shrink:0}
+  .wechat-id{flex:1;font-size:16px;font-weight:800;color:#111827;letter-spacing:.5px;user-select:all}
+  .wechat-copy{flex-shrink:0;background:#198754;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer}
+  .wechat-steps{list-style:none;padding:0;margin:0 0 16px;counter-reset:step}
+  .wechat-steps li{position:relative;padding-left:30px;font-size:13px;color:#4B5563;margin:9px 0;line-height:1.5;counter-increment:step}
+  .wechat-steps li::before{content:counter(step);position:absolute;left:0;top:1px;width:20px;height:20px;background:#ECFDF5;color:#198754;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .wechat-close{display:block;width:100%;padding:12px;background:#F1F5F9;color:#334155;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer}
+
+  /* ===== Responsive ===== */
+  @media(min-width:520px){.grid{grid-template-columns:1fr 1fr;gap:16px}}
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <img class="cover-bg" src="cover-bg.png" alt="招生封面">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">haoqi · 2026 新学期精选</div>
+    <h1 class="cover-title">新学期 <b>语数英</b><br>赛事一站通</h1>
+    <p class="cover-sub">28 项权威赛事 · 按学段/科目精准匹配。报名方式、含金量分析一次看懂。</p>
+    <button class="cover-cta" onclick="scrollToGrid()">立即查看精选赛事 →</button>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">28</div><div class="stat-l">精选赛事</div></div>
+  <div class="stat"><div class="stat-n">25</div><div class="stat-l">已核实</div></div>
+  <div class="stat"><div class="stat-n">13+9+4</div><div class="stat-l">语数英</div></div>
+  <div class="stat"><div class="stat-n">21</div><div class="stat-l">线下活动</div></div>
+</div>
+
+<div class="sec">
+  <div class="sec-title">按学科浏览</div>
+  <div class="sec-sub">点击筛选，快速找到适合孩子的赛事</div>
+</div>
+
+<div class="filters" id="filters"></div>
+
+<div class="grid" id="grid"></div>
+<div class="empty" id="empty" style="display:none">暂无该类别赛事</div>
+
+<div class="foot">
+  <div style="font-weight:700;color:#1E3A8A;font-size:13px;margin-bottom:4px">© haoqi · 新学期语数英赛事一站通</div>
+  本页面信息根据公开渠道整理，最终以官方通知为准。<br>
+  生成日期：2026-09-06
+</div>
+
+<button class="float-cta" onclick="consult()">💬 立即咨询 · 加老师微信</button>
+
+<!-- Modal -->
+<div class="modal-mask" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-close"><button onclick="closeModal()">×</button></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- 加微信弹层 -->
+<div class="wechat-mask" id="wechat-mask" onclick="if(event.target===this)closeWechat()">
+  <div class="wechat-box">
+    <div class="wechat-head">
+      <h3>添加 haoqi 老师微信</h3>
+      <p id="wechat-target">新学期赛事</p>
+    </div>
+    <div class="wechat-body">
+      <div class="wechat-qr-wrap">
+        <img class="wechat-qr" src="wechat-qr.png" alt="老师微信二维码" onerror="this.style.display='none'">
+      </div>
+      <p class="wechat-hint" id="wechat-hint">长按识别上方二维码，或复制手机号添加老师微信</p>
+      <div class="wechat-id-row">
+        <span class="wechat-id-label">手机号</span>
+        <span class="wechat-id" id="wechat-id-text">15360414203</span>
+        <button class="wechat-copy" id="wechat-copy-btn" onclick="copyWechatAgain()">复制</button>
+      </div>
+      <ol class="wechat-steps">
+        <li>打开微信 → 点击右上角「＋」→ 添加朋友</li>
+        <li>粘贴刚刚复制的手机号，搜索添加老师</li>
+        <li>添加成功后，发一句「报名」即可咨询对应赛事</li>
+      </ol>
+      <button class="wechat-close" onclick="closeWechat()">我知道了</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = [{"id": 1, "name": "走美数学（走美杯）", "cat": "数学", "obj": "3-8年级", "regDate": "报名截止2026-10-23", "actDate": "2026-11-14 线下（分年级场次）", "status": "火热报名中", "value": "★★★★", "award": "陈省身学思奖(金)5% / 学趣奖(银)10% / 学乐奖(铜)25% / 优秀奖30%", "regWay": "机构代报名", "link": "https://zhsxhy.com（组委会）", "online": "线下（上海）", "sell": "上海『四大杯赛』之一，陈省身先生唯一支持的青少年数学活动；获奖比例高、难度中等偏上，利于丰富小升初简历。", "verify": "已核实（上海线下场）"}, {"id": 2, "name": "数学大王", "cat": "数学", "obj": "1-6年级", "regDate": "市赛2026-12-13", "actDate": "市赛2026-12-13；国赛2027年1月上旬（线上/线下）", "status": "火热报名中", "value": "★★★", "award": "联排评定 一等奖8% / 二等奖12% / 三等奖20%；决赛颁发奖牌", "regWay": "机构代报名", "link": "macaumaths.org（澳门组委会）", "online": "线上/线下", "sell": "国际性数学邀请赛，覆盖全国26个省份；一年两次，国际平台交流，证书含港/澳地区背书。", "verify": "已核实"}, {"id": 3, "name": "美国AMC8", "cat": "数学", "obj": "8年级及15.5岁以下", "regDate": "报名截止2026-01-13(19届)", "actDate": "2026-01-23 17:00-17:40（仅线下）", "status": "火热报名中", "value": "★★★★", "award": "满分奖(25分) / 全球卓越奖top1% / 全球优秀奖top5% / 小学组荣誉奖(≥15分)", "regWay": "机构代报名", "link": "www.seedasdan.asia / 阿思丹小程序", "online": "线下", "sell": "全球最具影响力青少年数学竞赛之一，中英双语；2026起仅线下，成绩国际认可，简历硬通货。", "verify": "已核实"}, {"id": 4, "name": "AMC10/12", "cat": "数学", "obj": "10/12年级及以下", "regDate": "A卷截止2026-10-26；B卷截止2026-11-03", "actDate": "A卷2026-11-05；B卷2026-11-13 17:00-18:15", "status": "火热报名中", "value": "★★★★★", "award": "满分奖 / 全球卓越奖top1% / 全球优秀奖top5% / 荣誉奖；前5%晋级AIME", "regWay": "机构代报名", "link": "www.amc-china.com / 阿思丹", "online": "线下", "sell": "美国数学协会(MAA)主办，top5%可晋级AIME；留学申请含金量最高的数学赛事之一。", "verify": "已核实"}, {"id": 5, "name": "YMO青少年数学思维", "cat": "数学", "obj": "1-6年级(小学)+初中", "regDate": "初赛报名截止2026-10-13", "actDate": "初赛2026-10(线上)；复赛2026-12(线下)；总决赛2027寒假", "status": "报名中", "value": "★★★", "award": "初赛晋级40%；复赛 特等5-10%/一等/二等/三等/优秀；决赛 特金10%/金15%/银20%", "regWay": "机构代报名", "link": "www.shiaosai.com", "online": "线上+线下", "sell": "全国性普及型数学赛事，难度友好（低于走美/AMC），适合多数孩子自我评价、以赛促学。", "verify": "已核实"}, {"id": 6, "name": "澳洲AMC", "cat": "数学", "obj": "1-12年级(Pre-A~E六组)", "regDate": "报名截止2026-09-28", "actDate": "2026-10-11（A/B 10:00；C/D/E 14:00）", "status": "报名中", "value": "★★★", "award": "全球成就奖(满分) / 卓越奖top0.3% / 一等奖 / 二等奖 / 三等奖 / 技能奖；获奖率约60%", "regWay": "机构代报名", "link": "australianamc.org.cn", "online": "线上/线下", "sell": "全球最大校际数学测评之一；中英双语、难度适中、获奖率高达60%，最适合低龄&竞赛新手入门。", "verify": "已核实"}, {"id": 7, "name": "金莲花数学", "cat": "数学", "obj": "小学 1-6 年级", "regDate": "待公布", "actDate": "待公布", "status": "待核实", "value": "★★★", "award": "一二三等奖", "regWay": "机构代报名", "link": "—", "online": "线下", "sell": "全国性小学生数学活动，证书适配校内数学学习。", "verify": "待核实（公开渠道未匹配到对应口径）"}, {"id": 8, "name": "WMO（世奥赛）", "cat": "数学", "obj": "2-9年级", "regDate": "待核实（每年两次，约3月报名）", "actDate": "初赛/省测 2026-12；全国总决选2027", "status": "报名中", "value": "★★★", "award": "省测 一等5%/二等15%/三等35%(整体约55%)；全国总决选 金4%/银10%/铜20%", "regWay": "机构代报名", "link": "www.wmoi.org", "online": "线下", "sell": "『参与·融合·创新』国际性赛事，覆盖全国、全球联动晋级；颁发个人成绩单+奖牌证书。", "verify": "已核实"}, {"id": 9, "name": "上海思维100（原中环杯）", "cat": "数学", "obj": "上海小学 3-5 年级", "regDate": "报名截止2026-XX-XX（以官网公告为准）", "actDate": "线下（以官网公告为准）", "status": "报名中", "value": "★★★★", "award": "一二三等奖 + 单项奖", "regWay": "机构代报名", "link": "www.siwei100.com 或 官方微信", "online": "线下（上海）", "sell": "上海本地重点数学赛事，前身中环杯，数论/组合难度高，上海择校加分项。", "verify": "已核实（思维100网）"}, {"id": 10, "name": "冰心文学写作", "cat": "语文", "obj": "1-9年级(分层组)", "regDate": "省赛批次12月；国赛2026-04", "actDate": "省选2026-12(线上)；国选2026-04-17~18", "status": "待开始", "value": "★★★", "award": "按低/中/高年级组、初中组、高中组设特/一/二/三等奖及优秀奖", "regWay": "机构代报名", "link": "www.bxwxds.com", "online": "线上", "sell": "21年品牌、国家级机构主办（中国散文学会等）；覆盖全国，证书评优/入团/综评可用，优秀作品可发表。", "verify": "已核实"}, {"id": 11, "name": "上海小学生古诗文大会", "cat": "语文", "obj": "上海 3-5 年级", "regDate": "公益免费，报名以学校通知为准", "actDate": "线下（以组委会通知为准）", "status": "报名中", "value": "★★★", "award": "一二三等奖（按区/市评选）", "regWay": "机构代报名", "link": "—", "online": "线下（上海）", "sell": "面向上海小学生的古诗文素养活动，课内为主（65%）+ 课外经典 + 国学，公益免费。", "verify": "已核实"}, {"id": 12, "name": "上海中学生古诗文大会", "cat": "语文", "obj": "上海初中生 / 高中生", "regDate": "公益免费，报名以学校通知为准", "actDate": "线下（以组委会通知为准）", "status": "报名中", "value": "★★★", "award": "一二三等奖", "regWay": "机构代报名", "link": "—", "online": "线下（上海）", "sell": "上海中学生古诗文素养活动，公益免费，对接课内古诗文与传统文化。", "verify": "已核实"}, {"id": 13, "name": "『中华经典』古诗文", "cat": "语文", "obj": "1-5年级", "regDate": "初选2026-12-20；复选2027-01", "actDate": "初选线上2026-12-20；复选线上2027-01", "status": "报名中", "value": "★★★", "award": "特/一/二/三等奖，获奖率约 一等10%/二等25%/三等35%", "regWay": "机构代报名", "link": "待核实（公众号『中华经典』）", "online": "线上", "sell": "面向小学生的古诗文素养活动，考察积累与理解；备赛同时巩固课内古诗文，夯实语文基础。", "verify": "待核实"}, {"id": 14, "name": "叶圣陶杯", "cat": "语文", "obj": "5年级-高中（分语文/英语）", "regDate": "待核实", "actDate": "省选2026-12；国选2027-01（线上）", "status": "报名中", "value": "★★", "award": "特等/一等/二等/三等奖及优秀奖（免报名费）", "regWay": "机构代报名", "link": "www.yeshengtao.com", "online": "线上", "sell": "以叶圣陶教育思想为宗旨，『听说读写宜并重』；教育部白名单相关，含金量高、公益免费。", "verify": "已核实"}, {"id": 15, "name": "汉语小达人", "cat": "语文", "obj": "上海 3-5年级", "regDate": "2026-09~2027-01", "actDate": "区选09-10月；市赛11月；终极比拼次年1月", "status": "报名中", "value": "★★★", "award": "区级荣誉+市级等第奖；校级/区/市逐级晋级，市级获奖名单公示", "regWay": "机构代报名", "link": "www.zhongwenzixiu.cn", "online": "线上+线下", "sell": "华东师大《中文自修》编辑部主办，上海官方语文学科活动；免费公益，市级证书小升初加分。", "verify": "已核实"}, {"id": 16, "name": "梦想之星", "cat": "英语", "obj": "中小学生", "regDate": "报名截止以官方公布为准", "actDate": "线下/线上（以官方公布为准）", "status": "待核实", "value": "★★★", "award": "一二三等奖", "regWay": "机构代报名", "link": "—", "online": "线下/线上", "sell": "英语风采展示类活动，锻炼表达与演讲能力。", "verify": "待核实（公开渠道未匹配到对应口径）"}, {"id": 17, "name": "剑桥五级KET/PET", "cat": "英语", "obj": "无年龄限制（分级别）", "regDate": "每月至少一场（提前约2月报名）", "actDate": "全年多场（线下笔试+口试）", "status": "报名中", "value": "★★★★", "award": "剑桥官方证书（KET=A2，PET=B1)；成绩终身有效", "regWay": "机构代报名", "link": "www.cambridgeenglish.org", "online": "线下", "sell": "剑桥大学考评部官方认证，国际通用；是上海小升初/三公简历中最主流的英语能力证明。", "verify": "已核实"}, {"id": 18, "name": "小托福 TOEFL Junior", "cat": "英语", "obj": "17周岁及以下", "regDate": "每月多场（提前10个工作截止）", "actDate": "全年多场（线下纸笔/在家考）", "status": "报名中", "value": "★★★", "award": "标准笔试满分900，850+为择校黄金线；可加考口语/写作", "regWay": "机构代报名", "link": "www.toeflyss.cn", "online": "线下/在家考", "sell": "ETS官方青少英语测试，权威、信效度高；『三公』及国际学校英语能力硬指标，成绩有效2年。", "verify": "已核实"}, {"id": 19, "name": "世少杯（世界少年奥林匹克思维能力测评·中国区）", "cat": "数学", "obj": "一年级至高三（共12个组别，需先晋级(省级测评)获奖方可报名总评）", "regDate": "海选即日起至2026-10-18；晋级(省级)报名2026-11-01至11-22；总评报名2026-12至2027-01-17", "actDate": "海选(市级)2026-10-25线上；晋级(省级)2026-11-29线上；总评2027-01北京线下；2027暑期亚洲/世界总决赛", "status": "报名中", "value": "★★★★（国际性权威研学测评，市→省→全国→亚洲→世界晋级链完整）", "award": "晋级(省级测评)获奖者可报名北京总评；总评依组委会标准评定、颁发证书与奖牌", "regWay": "机构代报名", "link": "www.shishaobei.com / 公号SHISHAOBEI1937 / 微信SHISHAOBEI1997", "online": "线上(海选/晋级) + 线下(北京总评)", "sell": "世界级少年奥林匹克思维测评，晋级链“市-省-全国-亚洲-世界”完整；\n激发数理兴趣、拓展思维深度；总评含北京研学行程，获奖可冲击全球赛场；\n费用：全程3880元/人/科，仅测评1500元/人/科，加科目1000元/人。", "verify": "已核实（官方文件 世办发〔2026〕19号）"}, {"id": 20, "name": "走美国际数学邀请赛（2026秋季）", "cat": "数学", "obj": "小学1-6年级", "regDate": "报名截止2026-10-28（周三中午12:00）", "actDate": "模拟2026-11-06(周五)19:00-20:30；正式2026-11-07(周六)19:30-20:30", "status": "报名中", "value": "★★★（数学思维能力测评，面向低龄、获奖面友好）", "award": "一等奖前5% / 二等奖5%-15% / 三等奖15%-35% / 优胜奖35%-65%；颁发证书", "regWay": "机构代报名", "link": "走美国际数学邀请赛组委会（暂无独立官网，含证书查询通道）", "online": "线上（纯线上，考前30分钟发链接）", "sell": "纯线上一次模拟+一次正式；\n考察观察/计算/逻辑推理/空间想象等思维；\n获奖率友好（前65%有奖），低龄友好、易出成果；报名费380元/人，截止后不可退费。", "verify": "已核实（官方邀请赛通知文件）"}, {"id": 21, "name": "「丁一杯」全国数学思维（2026冬季省赛）", "cat": "数学", "obj": "2-8年级（面向全国）", "regDate": "报名截止2026-10-11", "actDate": "2026-10底-11月初（省赛）", "status": "报名中（截止10-11）", "value": "★★★（基于现行教学大纲、立足课本高于课本、深度拓展）", "award": "省赛一二三等奖颁发证书+奖牌；省赛一二等奖晋级全国赛", "regWay": "机构代报名", "link": "【三学士平台】微信服务号（具体报名入口以服务号公布为准）", "online": "线下考点为主，偏远地区可线上", "sell": "依托现行大纲、立足课本深度拓展；一年夏冬两届，省赛即第一轮门槛低；\n免费电子模拟卷3套+纸质卷6套；配套题库《举一反三》/《了不起的中国传统数学文化》；\n省赛一二等奖直通全国赛。", "verify": "已核实（官方报名通知）"}, {"id": 22, "name": "HiMCM美国高中生数学建模竞赛（2026赛季）", "cat": "综合(数学/科技)", "obj": "9-12 年级，1-4 人团队 + 指导老师", "regDate": "报名截止 2026-11-05（美东）", "actDate": "2026-11-05 至 2026-11-18（14 天）", "status": "火热报名中", "value": "★★★★★", "award": "Outstanding / Finalist / Meritorious / Honorable Mention / Successful Participant", "regWay": "机构代报名", "link": "contest.comap.com/highschool/contests/himcm/", "online": "线上", "sell": "全球顶级高中数学建模赛事，留学申请硬通货；14 天内团队完成论文，锻炼建模/写作/协作能力。", "verify": "已核实（COMAP 官网）"}, {"id": 23, "name": "「外研社杯」全国中学生外语素养大赛", "cat": "英语", "obj": "全国高中在校学生(含中职)", "regDate": "新一届报名预计2026年8月启动（待官方公布；第22届已2026-03完成）", "actDate": "新一届赛程：报名初赛→地区复赛→地区决赛→全国总决赛（预计2027年3月）", "status": "第22届已结束，新一届即将启动", "value": "★★★★（教育部白名单中唯一外语类赛事，累计参赛1100万+）", "award": "全国总决赛：冠亚季军 + 特等奖(180名) + 一二三等奖 + 优秀指导教师/组织单位", "regWay": "机构代报名", "link": "https://events.fltrp.com/", "online": "线上(初赛/复赛) + 线下(地区决赛/全国总决赛)", "sell": "教育部白名单中**唯一**外语类赛事，北京外国语大学主办；\n规模最大、水平最高的外语素养大赛，公益零收费；\n考察语言知识/技能/文化意识/学习能力/思维品质五大核心素养；\n综评院校认可度高，是报考北外或综合评价招生的重点赛事。", "verify": "已核实（北京外国语大学+外研社官方）"}, {"id": 24, "name": "鲁迅青少年文学大赛（第十七届）", "cat": "语文", "obj": "全国中小学生，高三年级(含)以下；数字作品1-8年级", "regDate": "高三组即日起至2026-1-15；高一高二组即日起至2026-5-20", "actDate": "高三组：省级初赛(截1/15)→复赛(1/31)→全国总决赛(2/28)；高一高二组：省级初赛(截5/20)→复赛(6/21)→全国总决赛(7月底)", "status": "报名中", "value": "★★★★（鲁迅文化发展中心主办，白名单赛事，公益性不收费）", "award": "特等奖+一等奖+二等奖+三等奖+优秀奖（每组别）；优秀指导教师奖；优秀组织奖", "regWay": "机构代报名", "link": "http://www.luxunwenzue.cn/", "online": "线下为主（投稿可邮寄纸质稿）", "sell": "鲁迅先生之子周海婴先生倡议发起，2026年是鲁迅诞辰145周年、逝世90周年；\n教育部白名单赛事，公益不收费；文字+数字作品双赛道；\n累计参赛超1000万人次；作品有机会入选年度获奖作品集与《东方教育时报》专辑。", "verify": "已核实（第十七届鲁迅青少年文学大赛官方通知）"}, {"id": 25, "name": "世界华人学生作文大赛（第二十七届）", "cat": "语文", "obj": "中国内地普通高中在校学生 + 港澳台 + 海外18周岁及以下华裔青少年", "regDate": "2026-11-30（征稿及初审截止）", "actDate": "征稿即日起-2026-11-30、复审2026/12-2027/1、终审2027/2、结果2027/4、颁奖2027/7-8", "status": "报名中（征稿进行中）", "value": "★★★★（中国侨联+全国台联主办，白名单第24项人文综合素养）", "award": "特等奖+一等奖+二等奖+三等奖（电子证书）；优秀组织单位/教师奖", "regWay": "机构代报名", "link": "www.zuowendasai.com", "online": "线上注册+线下纸质稿件寄送", "sell": "中国侨联+全国台联主办，列入教育部2025-2028白名单（第24项人文综合素养）；\n面向海内外华人青少年，覆盖73国3880所学校570万+学生；\n公益不收费；2026年度征稿已启动，11/30截止；获奖者有机会参加「亲情中华·中国寻根之旅」夏令营。", "verify": "已核实（中国侨联+第二十七届官方通知）"}, {"id": 26, "name": "「美丽中国」全国版图知识竞赛（第七届）+ 少儿手绘地图大赛", "cat": "综合(数学/科技)", "obj": "全国中小学生（小学组、中学组）；手绘地图15周岁以下(6-8/9-12/13-15岁三组)", "regDate": "学校注册2026/9-10；学生报名2026/10-11；答题2026/12-2027/3", "actDate": "学校注册(2026/9-10) → 学生报名(2026/10-11) → 答题(2026/12-2027/3) → 结果公示(2027/4-5)", "status": "报名中（学校注册进行中）", "value": "★★★★（自然资源部主办，白名单赛事，公益）", "award": "优秀个人奖+优秀组织奖+优秀指导教师奖+「国家版图小卫士」称号（电子证书）", "regWay": "机构代报名", "link": "https://www.pecmnr.cn/gjbt/", "online": "线上答题（单选/多选，限时）", "sell": "自然资源部官方主办，列入2025-2028白名单；\n以国家版图知识+自然资源知识为主，公益免费；\n同步设少儿手绘地图大赛(6-15岁三组别)；\n培养国家版图意识，结果不作为招生入学依据。", "verify": "已核实（自然资源部办公厅 自然资办函〔2026〕936号）"}, {"id": 27, "name": "全国中学生环境保护优秀作文征集活动（白名单第27项）", "cat": "语文", "obj": "普通高中、中专、职高学生", "regDate": "第七届已结束(2025-12-31截止)；第八届(下一届)预计2026年下半年启动", "actDate": "第七届：初赛报名(已截止)→复赛(2026/1/25线下)→决赛(2026/3/15线下)→结果(2026/4)", "status": "第七届已完成，新一届(第八届)即将开赛", "value": "★★★★（中华环保联合会主办，白名单第27项人文综合素养）", "award": "复赛/决赛一二三等奖；优秀指导教师奖（需指导40+学生参赛）", "regWay": "机构代报名", "link": "www.huanbaozuowen.com", "online": "线上初赛 + 线下复赛/决赛", "sell": "中华环保联合会主办，教育部白名单第27项人文综合素养类；\n公益不收费；主题「美丽中国，双碳有我」；\n含环保作文(800-1500字)+研究性学习报告(1500-3000字)两部分；\n为综评/升学积累「双碳」主题写作素材与电子证书。", "verify": "已核实（中华环保联合会 中环联字〔2025〕323号 + 第七届实施方案）"}, {"id": 28, "name": "希望国际 IHC（原希望杯·2026秋季线上活动）", "cat": "数学", "obj": "1~6年级（秋季年级，Level 1-6）", "regDate": "报名截止2026-11-18", "actDate": "模拟调试2026-11-27（周五）18:30-21:30；正式活动2026-11-28（周六）", "status": "报名中", "value": "★★★★（原希望杯，1990年创办，教育部A类学科竞赛，覆盖全球20+国家）", "award": "一等奖5%（证书+奖牌） / 二等奖10%（证书+奖牌） / 三等奖15%（证书+奖牌） / 优胜奖20%（仅证书）；获奖证书免费邮寄到家", "regWay": "机构代报名", "link": "https://www.hopemath.world / 公众号「大家一起来IHC」", "online": "线上", "sell": "「源于课本、高于课本」的命题原则，贴合课内数学；累计参赛学生超千万；20题/60分钟，对低年级友好、获奖面广；获奖证书可写入升学简历，校内评优/小升初综合素质评价的高含金量凭证。", "verify": "已核实（自主选拔在线 zizzs.com 公告）"}];
+const CATS = ["\u5168\u90e8", "\u6570\u5b66", "\u8bed\u6587", "\u82f1\u8bed", "\u7efc\u5408(\u6570\u5b66/\u79d1\u6280)"];
+const CAT_COLOR = {"\u6570\u5b66": "#3B82F6", "\u8bed\u6587": "#EF4444", "\u82f1\u8bed": "#10B981", "\u7efc\u5408(\u6570\u5b66/\u79d1\u6280)": "#8B5CF6"};
+const CAT_ICON = {"\u6570\u5b66": "\ud83d\udcd0", "\u8bed\u6587": "\ud83d\udcd6", "\u82f1\u8bed": "\ud83d\udd24", "\u7efc\u5408(\u6570\u5b66/\u79d1\u6280)": "\ud83e\udde0"};
+const THEME = {"\u6570\u5b66": ["#2563EB", "#3B82F6", "#60A5FA"], "\u8bed\u6587": ["#EF4444", "#F87171", "#FCA5A5"], "\u82f1\u8bed": ["#059669", "#10B981", "#34D399"], "\u7efc\u5408(\u6570\u5b66/\u79d1\u6280)": ["#7C3AED", "#8B5CF6", "#A78BFA"]};
+
+let activeCat = "全部";
+const WECHAT = {
+  id: "15360414203",
+  hint: "长按识别上方二维码，或复制手机号添加老师微信"
+};
+
+function scrollToGrid() {
+  document.getElementById("grid").scrollIntoView({behavior:"smooth"});
+}
+
+function renderFilters() {
+  const el = document.getElementById("filters");
+  el.innerHTML = CATS.map(c => `<div class="chip ${c===activeCat?'active':''}" onclick="setCat('${c}')">${c}</div>`).join("");
+}
+
+function setCat(c) {
+  activeCat = c;
+  renderFilters();
+  renderGrid();
+}
+
+function extractTags(e) {
+  const tags = [];
+  const v = e.value || "";
+  if (v.includes("★")) tags.push("含金量" + v.match(/★+/)?.[0].length + "星");
+  if (v.includes("A 类") || v.includes("A类") || v.includes("白名单") || v.includes("教育部")) tags.push("教育部认证");
+  if (e.online && e.online.includes("线上")) tags.push("线上");
+  if (e.online && e.online.includes("线下")) tags.push("线下");
+  if (e.status && e.status.includes("报名中")) tags.push("报名中");
+  if (/1|2|3/.test(e.obj || "") || e.obj.includes("年级")) tags.push("低年级友好");
+  return tags.slice(0, 4);
+}
+
+function formatDeadline(t) {
+  const s = t || "";
+  const m = s.match(/20\d\d[-/]\d{1,2}[-/]\d{1,2}/);
+  if (m) return m[0];
+  const d = s.match(/\d{1,2}[-/]\d{1,2}/);
+  return d ? d[0] : s;
+}
+
+function renderGrid() {
+  const list = activeCat === "全部" ? DATA : DATA.filter(e => e.cat === activeCat);
+  const el = document.getElementById("grid");
+  document.getElementById("empty").style.display = list.length ? "none" : "block";
+  el.innerHTML = list.map(e => {
+    const th = THEME[e.cat] || ["#6B7280","#9CA3AF","#D1D5DB"];
+    const icon = CAT_ICON[e.cat] || "🎯";
+    const verified = e.verify && e.verify.includes("已核实");
+    const on = e.status && e.status.includes("报名中");
+    const tags = extractTags(e);
+    const dl = formatDeadline(e.regDate);
+    return `
+    <div class="card" onclick="openModal(${e.id})">
+      <div class="card-cover" style="--c1:${th[0]};--c2:${th[1]};--c3:${th[2]}">
+        <span class="card-cover-status ${on?'on':''}">${e.status || '—'}</span>
+        <span class="card-cover-name">${e.name}</span>
+        <span class="card-cover-emoji">${icon}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${e.name}${verified ? ' <span class="card-tag" style="background:#D1FAE5;color:#065F46">已核实</span>' : ''}</div>
+        <div class="card-sell">💡 ${e.sell || '—'}</div>
+        <div class="card-tags">${tags.length ? tags.map(t=>`<span class="card-tag">${t}</span>`).join("") : ''}</div>
+        <div class="card-deadline">报名截止：<b>${dl || '—'}</b></div>
+        <button class="card-btn" onclick="event.stopPropagation();consult('${e.name}')">立即报名</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function openModal(id) {
+  const e = DATA.find(x => x.id === id);
+  if (!e) return;
+  const color = CAT_COLOR[e.cat] || "#6B7280";
+  const verified = e.verify && e.verify.includes("已核实");
+  const body = document.getElementById("modal-body");
+  body.innerHTML = `
+    <h2><span>${e.name}</span><span class="modal-cat" style="background:${color}">${e.cat}</span>${verified ? '<span class="badge-verify">已核实</span>' : ''}</h2>
+    <div class="modal-sell">💡 ${e.sell || '—'}</div>
+    <div class="modal-section">
+      <div class="modal-section-title">参赛信息</div>
+      <div class="modal-row"><span class="lbl">参赛对象</span>${e.obj || '—'}</div>
+      <div class="modal-row"><span class="lbl">报名日期</span>${e.regDate || '—'}</div>
+      <div class="modal-row"><span class="lbl">活动时间</span>${e.actDate || '—'}</div>
+      <div class="modal-row"><span class="lbl">报名状态</span>${e.status || '—'}</div>
+      <div class="modal-row"><span class="lbl">形式</span>${e.online || '—'}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">奖项与含金量</div>
+      <div class="modal-row"><span class="lbl">奖项设置</span>${e.award || '—'}</div>
+      <div class="modal-row"><span class="lbl">含金量</span>${e.value || '—'}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">报名方式</div>
+      <div class="modal-row">${e.regWay || '—'}</div>
+      ${e.verify && !verified ? `<div class="modal-row" style="color:#9CA3AF;font-size:12px;margin-top:6px">⚠️ ${e.verify}</div>` : ''}
+    </div>
+    <button class="modal-btn" onclick="consult('${e.name}')">立即咨询 · 报名 ${e.name}</button>
+  `;
+  document.getElementById("modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+// ===== 加微信跳转 =====
+function consult(name) {
+  const target = name ? `「${name}」` : "新学期赛事";
+  copyText(WECHAT.id);
+  const t = document.getElementById("wechat-target");
+  if (t) t.textContent = target;
+  const h = document.getElementById("wechat-hint");
+  if (h) h.textContent = WECHAT.hint;
+  const mask = document.getElementById("wechat-mask");
+  if (mask) {
+    mask.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function copyText(text) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+    } else {
+      fallbackCopy(text);
+    }
+  } catch (e) { fallbackCopy(text); }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.left = "-9999px";
+  ta.style.top = "0";
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try { document.execCommand("copy"); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+function copyWechatAgain() {
+  copyText(WECHAT.id);
+  const btn = document.getElementById("wechat-copy-btn");
+  if (btn) {
+    const orig = btn.textContent;
+    btn.textContent = "✓ 已复制";
+    setTimeout(() => btn.textContent = orig, 1400);
+  }
+}
+
+function closeWechat() {
+  const mask = document.getElementById("wechat-mask");
+  if (mask) mask.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+// Init
+renderFilters();
+renderGrid();
+</script>
+</body>
+</html>
